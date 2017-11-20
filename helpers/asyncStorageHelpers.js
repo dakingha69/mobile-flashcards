@@ -25,7 +25,7 @@ const decks = {
   }
 }
 
-function denormalize(normalized) {
+export function denormalize(normalized) {
   const keys = Object.keys(normalized)
   return keys.map(key => (
     {

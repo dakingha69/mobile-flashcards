@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Header } from 'react-native-elements'
 import DeckList from './components/DeckList'
+import DeckDetail from './components/DeckDetail'
 import { getDecks } from './helpers/asyncStorageHelpers'
 
 export default class App extends Component {
@@ -17,19 +18,45 @@ export default class App extends Component {
     })
   }
 
+  getHeader = () => {
+    const { view, selectedDeck } = this.state
+    switch (view) {
+      case 'DeckList':
+        return (
+          <Header
+            centerComponent={{ text: 'My Decks', style: { color: '#fff' } }}
+            rightComponent={{ icon: 'add', color: '#fff' }}
+          />
+        )
+      case 'DeckDetail':
+        return (
+          <Header
+            leftComponent={{
+              icon: 'arrow-back',
+              color: '#fff',
+              onPress: () => this.handleBack()
+            }}
+            centerComponent={{ text: `${selectedDeck.title}`, style: { color: '#fff' } }}
+          />
+        )
+      default:
+
+    }
+  }
+
   handleDeckSelect = selectedDeck => {
     this.setState({view: 'DeckDetail', selectedDeck})
   }
 
+  handleBack = () => {
+    this.setState({view: 'DeckList', selectedDeck: ''})
+  }
+
   render() {
-    console.log(this.state)
     const { view } = this.state
     return (
       <View>
-        <Header
-          centerComponent={{ text: 'My Decks', style: { color: '#fff' } }}
-          rightComponent={{ icon: 'add', color: '#fff' }}
-        />
+        {this.getHeader()}
         {{
           'DeckList': (
             <DeckList
@@ -37,6 +64,12 @@ export default class App extends Component {
               handleDeckSelect={this.handleDeckSelect}
             />
           ),
+          'DeckDetail': (
+            <DeckDetail
+              deck={this.state.selectedDeck}
+              handleBack={this.handleBack}
+            />
+          )
         }[view]}
 
       </View>
