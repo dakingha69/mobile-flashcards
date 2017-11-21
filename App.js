@@ -6,7 +6,8 @@ import BackHeader from './components/BackHeader'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
 import AddDeck from './components/AddDeck'
-import { getDecks } from './helpers/asyncStorageHelpers'
+import AddQuestion from './components/AddQuestion'
+import { getDecks, getDeck } from './helpers/asyncStorageHelpers'
 
 export default class App extends Component {
   state = {
@@ -36,6 +37,10 @@ export default class App extends Component {
         return (
           <BackHeader title='Add Deck' handleBack={this.handleBack} />
         )
+      case 'AddQuestion':
+        return (
+          <BackHeader title='Add Question' handleBack={this.handleBackToDetail} />
+        )
       default:
         return (
           <HomeHeader handleAddDeck={this.handleAddDeck} />
@@ -59,6 +64,19 @@ export default class App extends Component {
     })
   }
 
+  handleAddQuestion = () => {
+    this.setState({view: 'AddQuestion'})
+  }
+
+  handleBackToDetail = () => {
+    const { title } = this.state.selectedDeck
+    this.setState({
+      view: 'DeckDetail',
+      selectedDeck: getDeck(title),
+      decks: getDecks()
+    })
+  }
+
   render() {
     const { view } = this.state
     return (
@@ -74,12 +92,19 @@ export default class App extends Component {
           'DeckDetail': (
             <DeckDetail
               deck={this.state.selectedDeck}
+              handleAddQuestion={this.handleAddQuestion}
               handleBack={this.handleBack}
             />
           ),
           'AddDeck': (
             <AddDeck
               handleBack={this.handleBack}
+            />
+          ),
+          'AddQuestion': (
+            <AddQuestion
+              title={this.state.selectedDeck.title}
+              handleBackToDetail={this.handleBackToDetail}
             />
           )
         }[view]}

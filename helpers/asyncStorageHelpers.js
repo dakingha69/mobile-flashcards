@@ -42,3 +42,11 @@ export function getDecks() {
 export function addDeck(deck) {
   decks[deck.title] = {...deck, questions: []}
 }
+
+export function addQuestion(key, question) {
+  decks[key].questions.push(question)
+}
+
+export function getDeck(key) {
+  return decks[key]
+}
