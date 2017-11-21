@@ -21,15 +21,16 @@ export default class DeckDetail extends Component {
         <Text style={{textAlign: 'center', fontSize: 20, marginTop: 50, color: 'grey'}}>
           Questions: {denormalize(deck.questions).length}
         </Text>
-        <Text style={{textAlign: 'center', fontSize: 20, marginTop: 50}}>
-          {deck.description}
+        <Text style={{textAlign: 'center', fontSize: 20, marginTop: 50, marginBottom: 50}}>
+          {deck.description ? deck.description : 'No description provided'}
         </Text>
         <Button
-          buttonStyle={{marginTop: 50}}
+          backgroundColor='#2894F3'
           raised
           icon={{name: 'add'}}
           title='ADD QUESTION' />
         <Button
+          backgroundColor='#89C14B'
           buttonStyle={{marginTop: 10}}
           raised
           icon={{name: 'launch'}}
