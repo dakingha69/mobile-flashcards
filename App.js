@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, ScrollView } from 'react-native'
 import { Header } from 'react-native-elements'
 import HomeHeader from './components/HomeHeader'
 import BackHeader from './components/BackHeader'
@@ -7,6 +7,7 @@ import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
 import AddDeck from './components/AddDeck'
 import AddQuestion from './components/AddQuestion'
+import QuizView from './components/QuizView'
 import { getDecks, getDeck } from './helpers/asyncStorageHelpers'
 
 export default class App extends Component {
@@ -41,6 +42,10 @@ export default class App extends Component {
         return (
           <BackHeader title='Add Question' handleBack={this.handleBackToDetail} />
         )
+      case 'QuizView':
+        return (
+          <BackHeader title='Quiz' handleBack={this.handleBackToDetail} />
+        )
       default:
         return (
           <HomeHeader handleAddDeck={this.handleAddDeck} />
@@ -68,6 +73,10 @@ export default class App extends Component {
     this.setState({view: 'AddQuestion'})
   }
 
+  handleQuiz = () => {
+    this.setState({view: 'QuizView'})
+  }
+
   handleBackToDetail = () => {
     const { title } = this.state.selectedDeck
     this.setState({
@@ -80,7 +89,7 @@ export default class App extends Component {
   render() {
     const { view } = this.state
     return (
-      <View>
+      <ScrollView>
         {this.getHeader()}
         {{
           'DeckList': (
@@ -93,6 +102,7 @@ export default class App extends Component {
             <DeckDetail
               deck={this.state.selectedDeck}
               handleAddQuestion={this.handleAddQuestion}
+              handleQuiz={this.handleQuiz}
               handleBack={this.handleBack}
             />
           ),
@@ -106,10 +116,16 @@ export default class App extends Component {
               title={this.state.selectedDeck.title}
               handleBackToDetail={this.handleBackToDetail}
             />
+          ),
+          'QuizView': (
+            <QuizView
+              deck={this.state.selectedDeck}
+              handleBackToDetail={this.handleBackToDetail}
+            />
           )
         }[view]}
 
-      </View>
+      </ScrollView>
     )
   }
 }
