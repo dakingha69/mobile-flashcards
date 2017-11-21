@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Header } from 'react-native-elements'
+import HomeHeader from './components/HomeHeader'
+import BackHeader from './components/BackHeader'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
 import { getDecks } from './helpers/asyncStorageHelpers'
@@ -23,21 +25,12 @@ export default class App extends Component {
     switch (view) {
       case 'DeckList':
         return (
-          <Header
-            centerComponent={{ text: 'My Decks', style: { color: '#fff' } }}
-            rightComponent={{ icon: 'add', color: '#fff' }}
-          />
+          <HomeHeader handleAddDeck={this.handleAddDeck} />
         )
       case 'DeckDetail':
         return (
-          <Header
-            leftComponent={{
-              icon: 'arrow-back',
-              color: '#fff',
-              onPress: () => this.handleBack()
-            }}
-            centerComponent={{ text: `${selectedDeck.title}`, style: { color: '#fff' } }}
-          />
+          <BackHeader title={selectedDeck.title} handleBack={this.handleBack} />
+        )
         )
       default:
 
