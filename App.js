@@ -5,6 +5,7 @@ import HomeHeader from './components/HomeHeader'
 import BackHeader from './components/BackHeader'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
+import AddDeck from './components/AddDeck'
 import { getDecks } from './helpers/asyncStorageHelpers'
 
 export default class App extends Component {
@@ -31,10 +32,19 @@ export default class App extends Component {
         return (
           <BackHeader title={selectedDeck.title} handleBack={this.handleBack} />
         )
+      case 'AddDeck':
+        return (
+          <BackHeader title='Add Deck' handleBack={this.handleBack} />
         )
       default:
-
+        return (
+          <HomeHeader handleAddDeck={this.handleAddDeck} />
+        )
     }
+  }
+
+  handleAddDeck = () => {
+    this.setState({view: 'AddDeck'})
   }
 
   handleDeckSelect = selectedDeck => {
@@ -42,7 +52,11 @@ export default class App extends Component {
   }
 
   handleBack = () => {
-    this.setState({view: 'DeckList', selectedDeck: ''})
+    this.setState({
+      view: 'DeckList',
+      selectedDeck: '',
+      decks: getDecks()
+    })
   }
 
   render() {
@@ -60,6 +74,11 @@ export default class App extends Component {
           'DeckDetail': (
             <DeckDetail
               deck={this.state.selectedDeck}
+              handleBack={this.handleBack}
+            />
+          ),
+          'AddDeck': (
+            <AddDeck
               handleBack={this.handleBack}
             />
           )

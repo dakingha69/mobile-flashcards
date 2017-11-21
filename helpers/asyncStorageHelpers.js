@@ -38,3 +38,7 @@ export function denormalize(normalized) {
 export function getDecks() {
   return denormalize(decks)
 }
+
+export function addDeck(deck) {
+  decks[deck.title] = {...deck, questions: []}
+}
