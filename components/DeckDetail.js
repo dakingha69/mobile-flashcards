@@ -36,7 +36,9 @@ export default class DeckDetail extends Component {
           buttonStyle={{marginTop: 10}}
           raised
           icon={{name: 'launch'}}
-          title='START QUIZ' />
+          title='START QUIZ'
+          onPress={() => this.props.handleQuiz()}
+        />
       </View>
     )
   }
