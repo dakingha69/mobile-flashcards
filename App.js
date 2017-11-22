@@ -18,9 +18,9 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      decks: getDecks()
-    })
+    getDecks()
+      .then(decks => this.setState({decks})
+    )
   }
 
   getHeader = () => {
@@ -62,12 +62,12 @@ export default class App extends Component {
   }
 
   handleBack = () => {
-    this.setState({
+    getDecks().then(decks => this.setState({
       view: 'DeckList',
       selectedDeck: '',
-      decks: getDecks()
+      decks
     })
-  }
+  )}
 
   handleAddQuestion = () => {
     this.setState({view: 'AddQuestion'})
@@ -79,11 +79,14 @@ export default class App extends Component {
 
   handleBackToDetail = () => {
     const { title } = this.state.selectedDeck
-    this.setState({
-      view: 'DeckDetail',
-      selectedDeck: getDeck(title),
-      decks: getDecks()
-    })
+    Promise.all([getDecks(), getDeck(title)])
+      .then(values => {
+        this.setState({
+          view: 'DeckDetail',
+          selectedDeck: values[1],
+          decks: values[0]
+        })
+      })
   }
 
   render() {

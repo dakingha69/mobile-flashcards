@@ -16,7 +16,7 @@ export default class AddQuestion extends Component {
   createQuestion = () => {
     const { title, question, answer } = this.state
     addQuestion(title, { question, answer })
-    this.props.handleBackToDetail()
+      .then(() => this.props.handleBackToDetail())
   }
 
   render() {

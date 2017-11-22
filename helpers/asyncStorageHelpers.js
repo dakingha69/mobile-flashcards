@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native'
+
 const decks = {
   React: {
     title: 'React',
@@ -25,28 +27,35 @@ const decks = {
   }
 }
 
-export function denormalize(normalized) {
-  const keys = Object.keys(normalized)
-  return keys.map(key => (
-    {
-      ...normalized[key],
-      id: key
-    }
-  ))
-}
-
 export function getDecks() {
-  return denormalize(decks)
+  return AsyncStorage.getAllKeys()
+    .then(keys => AsyncStorage.multiGet(keys))
+    .then(stores => stores.map(store => ({
+      ...JSON.parse(store[1]),
+      id: store[0]
+    }))
+  )
 }
 
 export function addDeck(deck) {
-  decks[deck.title] = {...deck, questions: []}
+  deck.questions = []
+  AsyncStorage.setItem(deck.title, JSON.stringify(deck))
 }
 
 export function addQuestion(key, question) {
-  decks[key].questions.push(question)
+  return AsyncStorage.getItem(key)
+    .then(deck => {
+      let parsedDeck = JSON.parse(deck)
+      parsedDeck.questions.push(question)
+      return AsyncStorage.mergeItem(key, JSON.stringify(parsedDeck))
+    })
 }
 
 export function getDeck(key) {
-  return decks[key]
+  return AsyncStorage.getItem(key)
+    .then(deck => ({
+      ...JSON.parse(deck),
+      id: key
+    })
+  )
 }

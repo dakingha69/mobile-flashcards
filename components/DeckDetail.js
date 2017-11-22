@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
-import { denormalize, getDeck } from '../helpers/asyncStorageHelpers'
 
 export default class DeckDetail extends Component {
   constructor(props) {
@@ -13,13 +12,14 @@ export default class DeckDetail extends Component {
 
   render() {
     const { deck } = this.state
+    console.log(deck)
     return (
       <View>
         <Text style={{textAlign: 'center', fontSize: 25, marginTop: 50}}>
           {deck.title}
         </Text>
         <Text style={{textAlign: 'center', fontSize: 20, marginTop: 50, color: 'grey'}}>
-          Questions: {denormalize(deck.questions).length}
+          Questions: {deck.questions.length}
         </Text>
         <Text style={{textAlign: 'center', fontSize: 20, marginTop: 50, marginBottom: 50}}>
           {deck.description ? deck.description : 'No description provided'}
