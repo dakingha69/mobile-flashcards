@@ -112,11 +112,15 @@ export default class QuizView extends Component {
                 }}>
                   Correct Answers
                 </Text>
-                <Button
-                  backgroundColor='#2894F3'
-                  title='TRY AGAIN'
-                  onPress={this.tryAgain}
-                />
+                {
+                  !((correct / questions.length) === 1) && (
+                    <Button
+                      backgroundColor='#2894F3'
+                      title='TRY AGAIN'
+                      onPress={this.tryAgain}
+                    />
+                  )
+                }
                 <Button
                   backgroundColor='#2894F3'
                   title='BACK TO DECK'
