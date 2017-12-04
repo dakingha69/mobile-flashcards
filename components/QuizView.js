@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { Button, FormLabel, FormInput } from 'react-native-elements'
 import { addQuestion } from '../helpers/asyncStorageHelpers'
+import { clearLocalNotification } from '../helpers/notificationHelpers'
 
 export default class QuizView extends Component {
   constructor(props) {
@@ -50,7 +51,7 @@ export default class QuizView extends Component {
   render() {
     const { counter, showAnswer, correct } = this.state
     const { questions } = this.state.deck
-    console.log(this.state)
+    if (counter + 1 > questions.length) clearLocalNotification()
     return (
       <View>
         {

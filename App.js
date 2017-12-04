@@ -9,6 +9,7 @@ import AddDeck from './components/AddDeck'
 import AddQuestion from './components/AddQuestion'
 import QuizView from './components/QuizView'
 import { getDecks, getDeck } from './helpers/asyncStorageHelpers'
+import { setLocalNotification } from './helpers/notificationHelpers'
 
 export default class App extends Component {
   state = {
@@ -19,8 +20,8 @@ export default class App extends Component {
 
   componentDidMount() {
     getDecks()
-      .then(decks => this.setState({decks})
-    )
+      .then(decks => this.setState({decks}))
+      .then(() => setLocalNotification())
   }
 
   getHeader = () => {
