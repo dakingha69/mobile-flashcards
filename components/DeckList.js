@@ -23,6 +23,9 @@ export default class DeckList extends Component {
         {
           decks.map(deck => (
             <Card key={deck.id} title={deck.title}>
+              <Text style={{marginBottom: 10, textAlign: 'center'}}>
+                Questions: {deck.questions.length}
+              </Text>
               <Text style={{ marginBottom:10 }}>
                 {
                   deck.description
