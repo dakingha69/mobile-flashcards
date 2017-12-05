@@ -50,7 +50,7 @@ export default class QuizView extends Component {
 
   render() {
     const { counter, showAnswer, correct } = this.state
-    const { questions } = this.state.deck
+    const { questions, title } = this.state.deck
     if (counter + 1 > questions.length) clearLocalNotification()
     return (
       <View>
@@ -126,7 +126,7 @@ export default class QuizView extends Component {
                   backgroundColor='#2894F3'
                   title='BACK TO DECK'
                   buttonStyle={{marginTop: 10}}
-                  onPress={() => this.props.handleBackToDetail()}
+                  onPress={() => this.props.handleBackToDetail(title)}
                 />
               </View>
             )

@@ -78,8 +78,7 @@ export default class App extends Component {
     this.setState({view: 'QuizView'})
   }
 
-  handleBackToDetail = () => {
-    const { title } = this.state.selectedDeck
+  handleBackToDetail = (title = this.state.selectedDeck.title) => {
     Promise.all([getDecks(), getDeck(title)])
       .then(values => {
         this.setState({
@@ -112,19 +111,19 @@ export default class App extends Component {
           ),
           'AddDeck': (
             <AddDeck
-              handleBack={this.handleBack}
+              handleBackToDetail={title => this.handleBackToDetail(title)}
             />
           ),
           'AddQuestion': (
             <AddQuestion
               title={this.state.selectedDeck.title}
-              handleBackToDetail={this.handleBackToDetail}
+              handleBackToDetail={title => this.handleBackToDetail(title)}
             />
           ),
           'QuizView': (
             <QuizView
               deck={this.state.selectedDeck}
-              handleBackToDetail={this.handleBackToDetail}
+              handleBackToDetail={title => this.handleBackToDetail(title)}
             />
           )
         }[view]}

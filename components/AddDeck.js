@@ -14,7 +14,7 @@ export default class AddDeck extends Component {
 
   createDeck = () => {
     addDeck(this.state)
-    this.props.handleBack()
+    this.props.handleBackToDetail(this.state.title)
   }
 
   render() {
